@@ -1,4 +1,4 @@
-#include "io.h"
+#include "rtl8139_io.h"
 
 void outl(uint16_t port, uint32_t value) {
     asm volatile ("outl %0, %1" : : "a"(value), "Nd"(port));
