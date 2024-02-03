@@ -1,5 +1,5 @@
-#ifndef BUFFER_H
-#define BUFFER_H
+#ifndef RTL8139_BUFFER_H
+#define RTL8139_BUFFER_H
 
 #include <stdlib.h>
 #include <stdint.h>
@@ -20,4 +20,4 @@ void resize_buffer(Buffer *buffer, size_t new_size); // Resizes the buffer to th
 void append_to_buffer(Buffer *buffer, const uint8_t *data, size_t length); // Appends data to the buffer
 void clear_buffer(Buffer *buffer);                // Clears the buffer's data and resets its size
 
-#endif // BUFFER_H
+#endif // RTL8139_BUFFER_H
