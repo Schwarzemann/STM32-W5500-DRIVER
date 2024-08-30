@@ -1,2 +1,2 @@
 # RTL8139
-A simple driver for Realtek RTL8139 PCI Etherner card.
+A simple driver for Realtek RTL8139 PCI Ethernet card.
