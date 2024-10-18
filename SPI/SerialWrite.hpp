@@ -1,13 +1,16 @@
 #pragma once
 
-#include "SPI/SerialConfiguration.h"
+#include "SerialConfiguration.hpp"
 #include <cstdint>
+#include <vector>  // Add the vector include to match the batchWrite declaration
 
 namespace eth {
 namespace spi {
 
-    // Forward declaration of SPI_HandleTypeDef to avoid direct dependency
-    struct SPI_HandleTypeDef;
+    // Define SPI_HandleTypeDef here to avoid incomplete type
+    struct SPI_HandleTypeDef {
+        uint32_t Instance;  // Mock instance field
+    };
 
     /**
      * @class SPIController
@@ -22,7 +25,7 @@ namespace spi {
          * @brief Constructs an SPIController with the given configuration.
          * @param config The SPI configuration settings.
          */
-        explicit SPIController(const SpiConfiguration& config);
+        explicit SPIController(const SPIConfiguration& config);
 
         // Disable copy constructor
         SPIController(const SPIController&) = delete;
@@ -47,8 +50,17 @@ namespace spi {
          */
         SPIHandle& getHandle() noexcept;
 
-        // Disable copy assignment
-        SPIController& operator=(const SPIController&) = delete;
+        /**
+         * @brief Writes multiple data values over SPI (batch write).
+         * @param dataList A list of address-data pairs.
+         */
+        void batchWrite(const std::vector<std::pair<uint16_t, uint8_t>>& dataList);
+
+        /**
+         * @brief Checks if the SPI is ready for transmission.
+         * @return True if ready, false otherwise.
+         */
+        bool isSPIReady() const;
 
     private:
         /**
@@ -68,10 +80,16 @@ namespace spi {
         void controlSlaveSelect(GPIOState state);
 
         // RAII class for managing Slave Select pin
-        class SlaveSelectGuard;
+        class SelectRAII {
+        public:
+            explicit SelectRAII(SPIController& controllerInstance);
+            ~SelectRAII();
+        private:
+            SPIController& controller;
+        };
 
-        SPIHandle spiHandle_{};
-        SpiConfiguration spiConfig_;
+        SPIHandle spiHandle_;
+        SPIConfiguration spiConfig_;
     };
 
 } // namespace spi

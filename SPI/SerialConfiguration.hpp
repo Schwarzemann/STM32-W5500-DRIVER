@@ -4,7 +4,7 @@
 #include <chrono>
 #include <iterator>
 #include <type_traits>
-#include <stm32f4xx_hal.h>
+#include "stm32f4xx_hal_example.h"
 
 namespace platform
 {

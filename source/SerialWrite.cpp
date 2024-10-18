@@ -1,4 +1,4 @@
-#include "SPI/SerialWrite.hpp"
+#include "../SPI/SerialWrite.hpp"
 #include <cstdint>
 #include <array>
 #include <limits>
